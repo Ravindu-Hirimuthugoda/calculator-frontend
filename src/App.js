@@ -1,55 +1,37 @@
-import Wrapper from './component/Wrapper';
-import Screen from './component/Screen';
-import ButtonBox from './component/ButtonBox';
-import Button from './component/Button';
-import React,{useState} from 'react';
-
-const btnValues = [
-  ["C","AC", "%", "/"],
-  [7, 8, 9, "*"],
-  [4, 5, 6, "-"],
-  [1, 2, 3, "+"],
-  [0, ".", "="],
-];
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Calculator from './pages/Calculator';
+import Welcome from './pages/Welcome';
+import {useHistory} from 'react-router-dom';
+import RedirectPage from './pages/Redirecing';
 
 function App() {
-  let [calc, setCalc] = useState({num:''});
-  let [answer, setAnswer] = useState({ans:0});
-
-  const btnHandler = (e)=>{
-    //console.log(e.target.innerHTML);
-    let val = e.target.innerHTML;
-    if(val === 'C' || val === 'AC'){
-      setCalc({...calc,num:''});
-      setAnswer({ans:0});
-    }
-    else if(val === '='){
-      fetch('https://2a67uxwzf2.execute-api.eu-west-1.amazonaws.com/dev/add',{
-        method: 'POST',
-        body: JSON.stringify(calc.num),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((res)=>{return res.json()}).then(data=>{
-        setCalc({num:''});
-        setAnswer({ans:data.result});
-      });
-    }else{
-      setCalc({...calc, num:calc.num+e.target.innerHTML})
-    }
-  }
-  return (
-    <Wrapper>
-      <Screen value = {calc.num ? calc.num : answer.ans}/>
-      <ButtonBox>
-        {btnValues.flat().map((btn,i)=>{
-          return(
-            <Button key={i} className={btn === '=' ?'equals':''} value={btn} onClick={btnHandler}/>
-          )
-        })}
-      </ButtonBox>
-    </Wrapper>
-  );
+    const history = useHistory();
+    return (
+      <div>
+        <main>
+          <Switch>
+          < Route path='/' exact>
+              {(localStorage.getItem('access_token') && localStorage.getItem('access_token')!='undefined')?history.replace('/home'): (
+                <div>
+                  <b>You are not logged in</b>
+                  <a href="https://calculator.auth.eu-west-1.amazoncognito.com/login?response_type=code&client_id=5s0821ekobplt0cti08dme3ced&redirect_uri=http://localhost:3000/welcome/">Sign in</a>
+                </div>
+              )}
+            </Route>
+            <Route path='/calculator'>
+              <Calculator/>
+            </Route>
+            <Route path='/home/'>
+              <Welcome/>
+            </Route>
+            <Route path='/welcome/'>
+              <RedirectPage/>
+            </Route>
+          </Switch>
+        </main>
+      </div>
+    ); 
 }
 
 export default App;
