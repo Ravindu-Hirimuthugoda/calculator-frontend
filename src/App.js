@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Calculator from './pages/Calculator';
 import Welcome from './pages/Welcome';
 import {useHistory} from 'react-router-dom';
-import RedirectPage from './pages/Redirecing';
+import RedirectPage from './pages/Loading';
 
 function App() {
     const history = useHistory();
