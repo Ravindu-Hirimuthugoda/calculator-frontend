@@ -13,7 +13,10 @@ const RedirectPage = ()=>{
               'Content-Type': 'application/json'
             }
           }).then((res)=>{return res.json()}).then(data=>{
+            console.log('access token is:');
             console.log(data.result['access_token']);
+            console.log('id token is:');
+            console.log(data.result['id_token']);
             localStorage.setItem('access_token',data.result['access_token']);
             history.replace('/home')
           });
