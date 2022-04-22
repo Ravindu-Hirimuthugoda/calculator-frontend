@@ -18,15 +18,11 @@ const LoadingPage = () => {
     let token = JSON.stringify(authCode);
     console.log(token);
     axios
-      .post(
-        "https://2a67uxwzf2.execute-api.eu-west-1.amazonaws.com/dev/auth",
-        token,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("/dev/auth", token, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => res.data)
       .then((res) => {
         console.log(res);

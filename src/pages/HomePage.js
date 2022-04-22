@@ -8,7 +8,8 @@ const HomePage = () => {
 
   useEffect(() => {
     axios
-      .get("https://2a67uxwzf2.execute-api.eu-west-1.amazonaws.com/dev/user")
+      // .get("https://2a67uxwzf2.execute-api.eu-west-1.amazonaws.com/dev/user")
+      .get("/dev/user")
       .then((res) => res.data)
       .then((res) => {
         setUserData(res);

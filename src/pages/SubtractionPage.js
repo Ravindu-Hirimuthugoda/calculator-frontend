@@ -9,7 +9,7 @@ function SubtractionPage(props) {
         <MainHeader userType={localStorage.getItem("userType")} />
       </header>
       <div>
-        <Form url="https://2a67uxwzf2.execute-api.eu-west-1.amazonaws.com/dev/subtraction" />
+        <Form url="/dev/subtraction" />
       </div>
     </Fragment>
   );
